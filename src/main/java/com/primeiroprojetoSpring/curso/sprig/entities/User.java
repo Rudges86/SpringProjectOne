@@ -3,6 +3,8 @@ package com.primeiroprojetoSpring.curso.sprig.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +19,10 @@ public class User implements Serializable {
     private String phone;
     private String password;
 
+    //Aqui vai ser feito o relacionamento, chamado 1 para muitos, que 1 usuário para vários pedidos
+    @OneToMany(mappedBy = "client") //esta mapeando no jpa. Dentro do parênteses, é passado o cara da relação, no caso o client que está na
+              //classe Order
+    private List<Order> orders = new ArrayList<>();
     public User(){}
 
     public User(Long id, String nome, String email, String phone, String password) {
@@ -66,7 +72,9 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    public List<Order> getOrders() {
+        return orders;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
