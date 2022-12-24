@@ -1,5 +1,6 @@
 package com.primeiroprojetoSpring.curso.sprig.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -20,6 +21,7 @@ public class User implements Serializable {
     private String password;
 
     //Aqui vai ser feito o relacionamento, chamado 1 para muitos, que 1 usuário para vários pedidos
+    @JsonIgnore
     @OneToMany(mappedBy = "client") //esta mapeando no jpa. Dentro do parênteses, é passado o cara da relação, no caso o client que está na
               //classe Order
     private List<Order> orders = new ArrayList<>();
