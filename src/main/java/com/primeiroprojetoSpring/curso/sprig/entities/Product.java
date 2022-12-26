@@ -1,5 +1,6 @@
 package com.primeiroprojetoSpring.curso.sprig.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -20,8 +21,12 @@ public class Product implements Serializable {
 
     //Foi utilizado o set, para que não seja cadastrado um pedido com várias categorias
     //O HashSet é para garantir que ela não comece nula, mas sim vazia, O Set é uma interface e não pode ser instânciado.
-    @Transient
-    private Set<Categoria> categirias = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name ="tb_product_category",joinColumns = @JoinColumn(name = "product_id"),
+    inverseJoinColumns = @JoinColumn(name="categoria_id") )
+    //JoinColumns é uma tabela, e o inverse é outra tabela
+    private Set<Categoria> categorias = new HashSet<>();
 
     public Product(){}
 
@@ -34,7 +39,7 @@ public class Product implements Serializable {
     }
 
     public Set<Categoria> getCategirias() {
-        return categirias;
+        return categorias;
     }
 
     public Long getId() {

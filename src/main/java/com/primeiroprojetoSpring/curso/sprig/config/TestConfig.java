@@ -54,6 +54,13 @@ public class TestConfig implements CommandLineRunner {
         Product p2 = new Product(null,"PC gamer","lorem ipsum",90.5,"");
         productRepository.saveAll(Arrays.asList(p1,p2));
 
+
+        p1.getCategirias().add(cat2);
+        p2.getCategirias().add(cat1);
+        p2.getCategirias().add(cat3);
+
+        productRepository.saveAll(Arrays.asList(p1,p2));
+
     }
 
 
