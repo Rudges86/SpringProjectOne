@@ -3,7 +3,9 @@ package com.primeiroprojetoSpring.curso.sprig.entities;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="Tb_categoria")
@@ -13,6 +15,9 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Transient
+    private Set<Product> products = new HashSet<>();
 
     public Categoria(){};
 
@@ -36,6 +41,9 @@ public class Categoria implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    public Set<Product> getProducts() {
+        return products;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,4 +56,6 @@ public class Categoria implements Serializable {
     public int hashCode() {
         return Objects.hash(id, name);
     }
+
+
 }

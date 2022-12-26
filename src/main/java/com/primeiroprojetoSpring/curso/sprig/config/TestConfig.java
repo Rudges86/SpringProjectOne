@@ -2,10 +2,12 @@ package com.primeiroprojetoSpring.curso.sprig.config;
 
 import com.primeiroprojetoSpring.curso.sprig.entities.Categoria;
 import com.primeiroprojetoSpring.curso.sprig.entities.Order;
+import com.primeiroprojetoSpring.curso.sprig.entities.Product;
 import com.primeiroprojetoSpring.curso.sprig.entities.User;
 import com.primeiroprojetoSpring.curso.sprig.entities.enuns.OrderStatus;
 import com.primeiroprojetoSpring.curso.sprig.repositories.CategoriaRepository;
 import com.primeiroprojetoSpring.curso.sprig.repositories.OrderRepository;
+import com.primeiroprojetoSpring.curso.sprig.repositories.ProductRepository;
 import com.primeiroprojetoSpring.curso.sprig.repositories.UserRepository;
 import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
+    private ProductRepository productRepository;
     @Override
     public void run(String... args) throws Exception {
         Categoria cat1 = new Categoria(null,"Fulano");
@@ -45,6 +49,11 @@ public class TestConfig implements CommandLineRunner {
         Order o2 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"),OrderStatus.CANCELED,u2);
         userRepository.saveAll(Arrays.asList(u1,u2));
         orderRepository.saveAll(Arrays.asList(o1,o2));
+
+        Product p1 = new Product(null,"The Lord of the Rings","lorem ipsum",90.5,"");
+        Product p2 = new Product(null,"PC gamer","lorem ipsum",90.5,"");
+        productRepository.saveAll(Arrays.asList(p1,p2));
+
     }
 
 
