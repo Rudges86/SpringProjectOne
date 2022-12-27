@@ -1,15 +1,8 @@
 package com.primeiroprojetoSpring.curso.sprig.config;
 
-import com.primeiroprojetoSpring.curso.sprig.entities.Categoria;
-import com.primeiroprojetoSpring.curso.sprig.entities.Order;
-import com.primeiroprojetoSpring.curso.sprig.entities.Product;
-import com.primeiroprojetoSpring.curso.sprig.entities.User;
+import com.primeiroprojetoSpring.curso.sprig.entities.*;
 import com.primeiroprojetoSpring.curso.sprig.entities.enuns.OrderStatus;
-import com.primeiroprojetoSpring.curso.sprig.repositories.CategoriaRepository;
-import com.primeiroprojetoSpring.curso.sprig.repositories.OrderRepository;
-import com.primeiroprojetoSpring.curso.sprig.repositories.ProductRepository;
-import com.primeiroprojetoSpring.curso.sprig.repositories.UserRepository;
-import jdk.jfr.Category;
+import com.primeiroprojetoSpring.curso.sprig.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +27,9 @@ public class TestConfig implements CommandLineRunner {
     private CategoriaRepository categoriaRepository;
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
     @Override
     public void run(String... args) throws Exception {
         Categoria cat1 = new Categoria(null,"Fulano");
@@ -61,6 +57,10 @@ public class TestConfig implements CommandLineRunner {
 
         productRepository.saveAll(Arrays.asList(p1,p2));
 
+        OrdemItem oi1 = new OrdemItem(o1,p1,2,p1.getPrice());
+        OrdemItem oi2 = new OrdemItem(o2,p2,1,p2.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2));
     }
 
 

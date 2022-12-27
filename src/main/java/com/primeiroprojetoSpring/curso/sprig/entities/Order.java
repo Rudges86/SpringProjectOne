@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="tb_pedido")
@@ -26,6 +28,8 @@ public class Order  implements Serializable {
     @JoinColumn(name = "client_id")  //juntando a coluna, e passando a chave estrangeira
     private User client;
 
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrdemItem> items = new HashSet<>();
     public Order(){}
 
     public Order(Long id, Instant moment,OrderStatus orderStatus, User client) {
@@ -33,19 +37,6 @@ public class Order  implements Serializable {
         this.moment = moment;
         setOrderStatus(orderStatus);
         this.client = client;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(moment, order.moment) && Objects.equals(client, order.client);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, moment, client);
     }
 
     public Long getId() {
@@ -80,5 +71,30 @@ public class Order  implements Serializable {
 
     public void setClient(User client) {
         this.client = client;
+    }
+
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Set<OrdemItem> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<OrdemItem> items) {
+        this.items = items;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) && Objects.equals(moment, order.moment) && Objects.equals(client, order.client);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, moment, client);
     }
 }
