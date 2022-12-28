@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -27,7 +28,8 @@ public class Product implements Serializable {
     inverseJoinColumns = @JoinColumn(name="categoria_id") )
     //JoinColumns é uma tabela, e o inverse é outra tabela
     private Set<Categoria> categorias = new HashSet<>();
-
+    @OneToMany(mappedBy = "id.product") // é mapeado por id.product, pois na classe pk existe um tipo product
+    private Set<OrdemItem> items = new HashSet<>();
     public Product(){}
 
     public Product(Long id, String name, String description, Double price, String imgUrl) {
@@ -37,11 +39,6 @@ public class Product implements Serializable {
         this.price = price;
         this.imgUrl = imgUrl;
     }
-
-    public Set<Categoria> getCategirias() {
-        return categorias;
-    }
-
     public Long getId() {
         return id;
     }
@@ -80,5 +77,43 @@ public class Product implements Serializable {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public Set<Categoria> getCategorias() {
+        return categorias;
+    }
+    @JsonIgnore
+    public Set<Order> getItems() {
+        Set<Order> set = new HashSet<>();
+        for(OrdemItem x : items){
+            set.add(x.getOrder());
+        }
+        return set;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(id, product.id) && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(price, product.price) && Objects.equals(imgUrl, product.imgUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price, imgUrl);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", categorias=" + categorias +
+                ", items=" + items +
+                '}';
     }
 }
