@@ -1,5 +1,6 @@
 package com.primeiroprojetoSpring.curso.sprig.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.sql.Insert;
 
@@ -16,6 +17,7 @@ public class Payment implements Serializable {
     private Long id;
     private Instant moment;
 
+    @JsonIgnore
     @OneToOne
     @MapsId //mapeando por ID e obrigatória nas relações 1 por 1
     private Order order;

@@ -98,6 +98,13 @@ public class Order  implements Serializable {
         this.items = items;
     }
 
+    public Double getTotal(){
+        double sum = 0.0;
+        for (OrdemItem  x: items){
+            sum += x.getSubTotal();
+        }
+        return sum;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

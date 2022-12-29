@@ -67,6 +67,11 @@ public class OrdemItem implements Serializable {
         this.preco = preco;
     }
 
+    // para isso aqui aparecer no JSON, e o que vale na plataforma java  enterprise, é o get, então passa o get em qualquer metódo
+    public Double getSubTotal(){
+        return preco * quantidade;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
