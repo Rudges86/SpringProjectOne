@@ -2,10 +2,12 @@ package com.primeiroprojetoSpring.curso.sprig.service;
 
 import com.primeiroprojetoSpring.curso.sprig.entities.User;
 import com.primeiroprojetoSpring.curso.sprig.repositories.UserRepository;
+import com.primeiroprojetoSpring.curso.sprig.service.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +24,7 @@ public class Userservice {
 
     public User findById(Long id){
         Optional<User> find = userRepository.findById(id);
-        return find.get();
+        return find.orElseThrow(()-> new ResourceNotFoundException(id));
     }
 
     public User insert (User obj){
