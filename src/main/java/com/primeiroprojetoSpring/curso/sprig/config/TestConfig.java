@@ -61,6 +61,12 @@ public class TestConfig implements CommandLineRunner {
         OrdemItem oi2 = new OrdemItem(o2,p2,1,p2.getPrice());
 
         orderItemRepository.saveAll(Arrays.asList(oi1,oi2));
+
+        Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"),o1);
+        //nas relações 1 para 1 não fazemos o save do repository na dependente
+        o1.setPayment(pay1);
+        //salvo em memória no o1 e o jpa tratara de salvar o pedido
+        orderRepository.save(o1);
     }
 
 
