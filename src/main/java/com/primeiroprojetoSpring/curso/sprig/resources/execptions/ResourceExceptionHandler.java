@@ -1,5 +1,6 @@
 package com.primeiroprojetoSpring.curso.sprig.resources.execptions;
 
+import com.primeiroprojetoSpring.curso.sprig.service.exception.DatabaseException;
 import com.primeiroprojetoSpring.curso.sprig.service.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -19,5 +20,11 @@ public class ResourceExceptionHandler {
         StandarError err = new StandarError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     };
-
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandarError> dabase(DatabaseException e, HttpServletRequest request){
+        String error = "Database error";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandarError err = new StandarError(Instant.now(),status.value(),error,e.getMessage(),request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    };
 }

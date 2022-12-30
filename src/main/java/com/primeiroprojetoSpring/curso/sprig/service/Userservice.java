@@ -4,6 +4,8 @@ import com.primeiroprojetoSpring.curso.sprig.entities.User;
 import com.primeiroprojetoSpring.curso.sprig.repositories.UserRepository;
 import com.primeiroprojetoSpring.curso.sprig.service.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -32,7 +34,16 @@ public class Userservice {
     }
 
     public void delete (Long id ){
-        userRepository.deleteById(id);
+        try{
+            userRepository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e){
+            //Ua-se primeiro o RuntimeException, para buscar o erro em execução
+            //e.printStackTrace(); para descobrir com exceção de erro está retornando.
+            throw new ResourceNotFoundException(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException(e.getMessage());
+        }
     }
 
 

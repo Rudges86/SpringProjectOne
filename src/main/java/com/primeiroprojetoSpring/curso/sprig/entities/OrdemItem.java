@@ -32,7 +32,7 @@ public class OrdemItem implements Serializable {
         this.preco = preco;
     }
 
-    @JsonIgnore
+    @JsonIgnor
 
     public Order getOrder(){
         return id.getOrder();
